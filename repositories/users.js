@@ -21,10 +21,19 @@ class UserRepository {
 			})
 		);
 	}
+
+	async create(attrs) {
+		const rescords = await this.getAll();
+		rescords.push(attrs);
+
+		await fs.promises.writeFile(this.filename, JSON.stringify(rescords));
+	}
 }
 
 const test = async () => {
 	const repo = new UserRepository('user.json');
+
+	await repo.create({ email: 'test@test.com', password: 'password' });
 
 	const users = await repo.getAll();
 
