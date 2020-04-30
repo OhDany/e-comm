@@ -23,10 +23,14 @@ class UserRepository {
 	}
 
 	async create(attrs) {
-		const rescords = await this.getAll();
-		rescords.push(attrs);
+		const records = await this.getAll();
+		records.push(attrs);
 
-		await fs.promises.writeFile(this.filename, JSON.stringify(rescords));
+		await this.writeAll(records);
+	}
+
+	async writeAll(records) {
+		await fs.promises.writeFile(this.filename, JSON.stringify(records, null, 2));
 	}
 }
 
