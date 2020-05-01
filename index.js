@@ -31,6 +31,9 @@ app.post('/', async (req, res) => {
 		return res.send('Password mus match');
 	}
 
+	// Create a user in our user repo to represent this person
+	const user = await usersRepo.create({ email, password });
+
 	res.send('Accoun created!!!');
 });
 
