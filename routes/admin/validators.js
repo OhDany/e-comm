@@ -17,11 +17,11 @@ module.exports = {
 		.trim()
 		.isLength({ min: 4, max: 20 })
 		.withMessage('Must be between 4 and 20 characters'),
-	requirePasswordConfirmation: check('passwordValidation')
+	requirePasswordConfirmation: check('passwordConfirmation')
 		.trim()
 		.isLength({ min: 4, max: 20 })
 		.withMessage('Must be between 4 and 20 characters')
-		.custom(async (passwordConfirmation, { req }) => {
+		.custom((passwordConfirmation, { req }) => {
 			if (passwordConfirmation !== req.body.password) {
 				throw new Error('Password must match');
 			}

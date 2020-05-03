@@ -3,7 +3,7 @@ const { check, validationResult } = require('express-validator');
 
 const usersRepo = require('../../repositories/users');
 const signupTemplate = require('../../views/admin/auth/signup');
-const siginTempalte = require('../../views/admin/auth/signin');
+const signinTemplate = require('../../views/admin/auth/signin');
 const { requireEmail, requirePassword, requirePasswordConfirmation } = require('./validators');
 
 const router = express.Router();
@@ -14,7 +14,10 @@ router.get('/signup', (req, res) => {
 
 router.post('/signup', [ requireEmail, requirePassword, requirePasswordConfirmation ], async (req, res) => {
 	const errors = validationResult(req);
-	console.log(errors);
+
+	if (!errors.isEmpty()) {
+		return res.send(signupTemplate({ req, errors }));
+	}
 
 	const { email, password, passwordConfirmation } = req.body;
 	const user = await usersRepo.create({ email, password });
@@ -30,7 +33,7 @@ router.get('/signout', (req, res) => {
 });
 
 router.get('/signin', (req, res) => {
-	res.send(siginTempalte());
+	res.send(signinTemplate());
 });
 
 router.post('/signin', async (req, res) => {
