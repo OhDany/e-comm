@@ -26,7 +26,7 @@ module.exports = {
 				throw new Error('Password must match');
 			}
 		}),
-	requireEmailExist: check('email')
+	requireEmailExists: check('email')
 		.trim()
 		.normalizeEmail()
 		.isEmail()
